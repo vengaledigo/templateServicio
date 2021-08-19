@@ -1,11 +1,15 @@
 package com.example.myapplication;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.hardware.usb.UsbManager;
 import android.os.Handler;
 import android.os.IBinder;
 import android.widget.Toast;
+
 
 public class MyService extends Service {
     public MyService() {
@@ -14,6 +18,8 @@ public class MyService extends Service {
     public Context context = this;
     public Handler handler = null;
     public static Runnable runnable = null;
+
+
 
 
     @Override
@@ -29,7 +35,12 @@ public class MyService extends Service {
         handler = new Handler();
         runnable = new Runnable() {
             public void run() {
-                Toast.makeText(context, "Service is still running", Toast.LENGTH_LONG).show();
+
+                IntentFilter filter = new IntentFilter();
+                filter.addAction("android.hardware.usb.action.USB_STATE");
+
+
+                Toast.makeText(context, "usb conectada hp", Toast.LENGTH_LONG).show();
                 handler.postDelayed(runnable, 10000);
             }
         };
